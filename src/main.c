@@ -76,14 +76,34 @@ int main(int argc, char **argv) {
         /*
          * p ... program, specifies a program.
          * s ... size of the tape, default is 30000
+         * f ... file with bf sourcecode
          */
-        while ((c = getopt(argc, argv, "p:s:")) != -1) {
+        while ((c = getopt(argc, argv, "p:s:h")) != -1) {
                 switch (c) {
                         case 'p':
                                 prg = optarg;
+                                prg_size = strlen(optarg);
                                 break;
                         case 's':
                                 tape_size = atoi(optarg);
+                                break;
+                        case 'h':
+                                printf("NAME\n");
+                                printf("bfint\n");
+                                printf("\n");
+                                printf("SYNOPSIS\n");
+                                printf("bfint [-p <program>] [-s <tape size>] [-h]\n");
+                                printf("\n");
+                                printf("DESCRIPTION\n");
+                                printf("Used to interpret brainfuck programs.\n");
+                                printf("\n");
+                                printf("OPTIONS\n");
+                                printf("-p <program>\n");
+                                printf("Specify the brainfuck program as String.\n");
+                                printf("\n");
+                                printf("-s <tape size>\n");
+                                printf("Specify the size of the tape in bytes.\n");
+                                return 0;
                                 break;
                         default:
                                 break;
