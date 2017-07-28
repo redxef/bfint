@@ -11,21 +11,24 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <stdint.h>
 #include <assert.h>
+#if defined __APPLE__ || defined __linux__ || defined __unix__
+#include <unistd.h>
+#define ISATTY isatty
+#define FILENO fileno
+#elif defined _WIN32
+#include <io.h>
+#define ISATTY _isatty
+#define FILENO _fileno
+#else
+#error "Whatever strange OS you are running, it is crap."
+#endif
 #include <string.h>
 #ifndef _WIN32
 #include <getopt.h>
 #endif
 
-#ifdef _WIN32
-#define ISATTY _isatty
-#define FILENO _fileno
-#else
-#define ISATTY isatty
-#define FILENO fileno
-#endif
 
 void skip_loop(char *prg, size_t *pc) {
         size_t brace_lvl = 0;
