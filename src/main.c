@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include <assert.h>
 #if defined __APPLE__ || defined __linux__ || defined __unix__
+#define UNIX_LIKE
 #include <unistd.h>
 #define ISATTY isatty
 #define FILENO fileno
@@ -25,7 +26,8 @@
 #error "Whatever strange OS you are running, it is crap."
 #endif
 #include <string.h>
-#ifndef _WIN32
+#ifdef UNIX_LIKE
+#define USING_OPTARG
 #include <getopt.h>
 #endif
 
@@ -61,7 +63,7 @@ void rewind_loop(char *prg, size_t *pc) {
 }
 
 int main(int argc, char **argv) {
-        char lst3[4] = { 0 };
+        char lst3[4] = { 0 };   /* used to detect eof */
         char *prg = NULL;       /* program */
         char *tape = NULL;      /* tape of memory */
         size_t prg_size = 0;
@@ -71,7 +73,7 @@ int main(int argc, char **argv) {
         int c;                  /* getopt char, later signals if prg was entered
                                    interactively (c = 10) */
 
-#ifndef _WIN32                  /* no one likes windows anyway */
+#ifdef USING_OPTARG
 
         /*
          * p ... program, specifies a program.
