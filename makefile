@@ -1,6 +1,6 @@
 CC    := gcc
 LD    := gcc
-CFLGS := -g -Wall
+CFLGS := -g -Wall -Wpedantic -Wextra
 LFLGS := 
 FILEN := bfint
 
@@ -43,6 +43,9 @@ $(FILEN): $(OBJS)
 $(D_OBJ)%.o: $(D_SRC)%.c | objdirs
 	$(CC) $(CFLGS) $(OIDIRS) -c $< -o $@
 
+install: $(FILEN)
+	$(shell cp $(FILEN) /usr/local/bin/$(FILEN))
+	
 ## support
 
 # clean the built files
