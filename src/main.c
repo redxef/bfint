@@ -254,6 +254,8 @@ int parse_options(int argc, char **argv, char **prg, ssize_t *prg_size, char **t
                                         fprintf(stderr, "Error: failed to open file: %s\n", optarg);
                                 }
                                 *flags |= !read_prg_from_file(prg, prg_size, f) << 0;
+                                if (f != stdin && f != NULL)
+                                        fclose(f);
                                 break;
                         default:
                                 break;
